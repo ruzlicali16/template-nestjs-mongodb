@@ -1,17 +1,24 @@
-import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
-import * as mongoose from 'mongoose';
-import { ITodoList } from 'src/interfaces';
+// src/todo-list/schemas/todo-list.schema.ts
+import {
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-const TodoListsSchema = new mongoose.Schema<ITodoList>({
-  name: {
-    type: String,
-    required: true,
-  },
-  description: String,
-});
+@Schema({ collection: 'todo-lists', timestamps: true })
+export class TodoList extends Document {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop()
+  description: string;
+}
+
+export const TodoListSchema = SchemaFactory.createForClass(TodoList);
 
 // Error handling middleware
-TodoListsSchema.post(
+TodoListSchema.post(
   'save',
   function (error: { name: string; message: string }, doc, next) {
     if (error.name === 'ValidationError') {
@@ -23,5 +30,3 @@ TodoListsSchema.post(
     }
   },
 );
-
-export const TodoList = TodoListsSchema;

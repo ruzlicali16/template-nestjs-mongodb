@@ -1,7 +1,7 @@
 import { Document, ObjectId } from "mongoose";
 
 export interface IBaseEntity extends Document {
-  readonly id: string | ObjectId;
-  createdDate?: string;
-  updatedDate?: string;
+  readonly _id: string | ObjectId;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 }

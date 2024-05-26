@@ -5,7 +5,7 @@ import { ITodoList } from 'src/interfaces';
 
 @Controller('todo-list')
 export class TodoListController {
-  constructor(private todoListService: TodoListService) {}
+  constructor(private readonly todoListService: TodoListService) {}
 
   @Post()
   async create(@Body() payload: CreateTodoListDto) {
@@ -15,6 +15,7 @@ export class TodoListController {
 
   @Get()
   async findAll(): Promise<ITodoList[] | void> {
-    await this.todoListService.findAll();
+    const response = await this.todoListService.findAll();
+    return response;
   }
 }
