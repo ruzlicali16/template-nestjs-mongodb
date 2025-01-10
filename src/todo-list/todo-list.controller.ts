@@ -1,20 +1,18 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateTodoListDto } from './dto';
+import { CreateDto, GetAllDto } from './dto';
 import { TodoListService } from './todo-list.service';
-import { ITodoList } from 'src/interfaces';
 
 @Controller('todo-list')
 export class TodoListController {
   constructor(private readonly todoListService: TodoListService) {}
 
   @Post()
-  async create(@Body() payload: CreateTodoListDto) {
-    const response = await this.todoListService.create(payload);
-    return response;
+  async create(@Body() payload: CreateDto): Promise<CreateDto> {
+    return this.todoListService.create(payload);
   }
 
   @Get()
-  async findAll(): Promise<ITodoList[] | void> {
+  async findAll(): Promise<GetAllDto[] | void> {
     const response = await this.todoListService.findAll();
     return response;
   }

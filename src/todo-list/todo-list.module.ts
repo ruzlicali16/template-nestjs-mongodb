@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TodoListController } from './todo-list.controller';
 import { TodoListService } from './todo-list.service';
 import { TodoList, TodoListSchema } from './schemas/todo-list.schema';
+import { TodoListRepository } from './todo-list.repository';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { TodoList, TodoListSchema } from './schemas/todo-list.schema';
     ]),
   ],
   controllers: [TodoListController],
-  providers: [TodoListService],
+  providers: [TodoListService, TodoListRepository],
 })
 export class TodoListModule {}

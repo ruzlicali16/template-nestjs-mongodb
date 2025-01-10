@@ -1,35 +1,20 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { ITodoList } from 'src/interfaces';
-import { CreateTodoListDto } from './dto';
-import { InjectModel } from '@nestjs/mongoose';
+import { Injectable } from '@nestjs/common';
+import { CreateDto, GetAllDto } from './dto';
+import { TodoListRepository } from './todo-list.repository';
 
 @Injectable()
 export class TodoListService {
-  constructor(
-    @InjectModel('TodoList') private readonly todoListModel: Model<ITodoList>,
-  ) {}
+  constructor(private readonly todoListRepository: TodoListRepository) {}
 
-  async create(
-    createTodoListDto: CreateTodoListDto,
-  ): Promise<ITodoList | InternalServerErrorException> {
-    const isExist = await this.findByName(createTodoListDto.name);
-    if (isExist) throw new InternalServerErrorException('Todo already exist.');
-    const payload = new this.todoListModel(createTodoListDto);
-    return payload.save();
+  async create(payload: CreateDto): Promise<CreateDto> {
+    return this.todoListRepository.create(payload);
   }
 
-  async findAll() {
-    return this.todoListModel.aggregate<ITodoList>([
-      {
-        $project: {
-          name: 1,
-        },
-      },
-    ]);
+  async findAll(): Promise<GetAllDto[]> {
+    return this.todoListRepository.findAll();
   }
 
-  async findByName(name: string) {
-    return this.todoListModel.findOne<ITodoList>({ name });
+  async findByName(name: string): Promise<CreateDto | null> {
+    return this.todoListRepository.findByName(name);
   }
 }
