@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateTodoListDto, UpdateTodoListDto, ListAllEntities } from './dto';
+import { CreateTodoListDto } from './dto';
 import { TodoListService } from './todo-list.service';
 import { ITodoList } from 'src/interfaces';
 

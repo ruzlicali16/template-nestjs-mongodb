@@ -14,7 +14,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('DATABASE_URI'),
-        dbName:  configService.get<string>('DATABASE_NAME'),
+        dbName: configService.get<string>('DATABASE_NAME'),
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),

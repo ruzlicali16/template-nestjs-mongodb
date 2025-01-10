@@ -1,4 +1,4 @@
-import { Document, ObjectId } from "mongoose";
+import { Document, ObjectId } from 'mongoose';
 
 export interface IBaseEntity extends Document {
   readonly _id: string | ObjectId;
